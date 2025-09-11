@@ -1,0 +1,32 @@
+Set up compilation
+Set up testing
+
+
+Static variable: A variable that keeps its value between invocations.
+
+- Read from a file descriptor one line at a time, using a buffer size.
+- Read  at most up to that buffer size.
+- In case of an error or EOF return NULL.
+- Reading an entire file should be possible on successive calls of get next correct in u in nderstanding tPossible ue:
+	* 0, standard i? ut
+	* 1, standard output
+	* 2, standard error
+	* files, pipes, sockets, special files (like devices)
+- Each returned line should include the \n character except when reaching EOF or BUFFER_SIZE.
+- Read as little data as possible each time get_next_line() is called.
+- If a newline character is encountered, return the current line
+immediately. 
+- Don’t read the whole file and then process each line.
+
+• Add all the helper functions you need in the get_next_line_utils.c file.
+
+- Compile with -D BUFFER_SIZE=n. It will define the buffer size for read().
+The buffer size value will be adjusted by your peer evaluators and the Moulinette
+to test your code.
+
+- It must compile with and without the -D BUFFER_SIZE. The default can be anything;
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 <files>.c
+
+Out of scope:
+- if the file associated with the file is modified after the last call while still reading.
+- binary files. A logical way to handle this can be added.
