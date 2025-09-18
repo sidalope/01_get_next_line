@@ -6,7 +6,7 @@
 /*   By: abisani <abisani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:45:39 by abisani           #+#    #+#             */
-/*   Updated: 2025/09/11 16:12:33 by abisani          ###   ########.fr       */
+/*   Updated: 2025/09/14 17:55:04 by abisani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,20 +129,23 @@ char	*read_into_buffer(int fd, char **static_buffer)
 
 	temp_buf = ft_calloc(BUFFER_SIZE + 1, 1);
 	if (!temp_buf)
-		return (NULL);	
+		return (NULL);
 	bytes_read = read(fd, temp_buf, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
+		temp_buf[bytes_read] = 0;
 		*static_buffer = ft_gnl_strjoin(*static_buffer, temp_buf);
 		if (!*static_buffer)
+		{
+			free(temp_buf);
 			return (NULL);
+		}
 		if (ft_strchr(temp_buf, '\n'))
 		{
 			free(temp_buf);
 			return (*static_buffer);
 		}
 		bytes_read = read(fd, temp_buf, BUFFER_SIZE);
-		temp_buf[bytes_read] = 0;
 	}
 	free(temp_buf);
 	return (NULL);
@@ -159,7 +162,7 @@ char	*get_next_line(int fd)
 		if (!buffer)
 			return (NULL);
 	}
-	if (read(fd, 0, 0) == -1 || BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
 	{
 		free(buffer);
 		buffer = NULL;
@@ -173,7 +176,5 @@ char	*get_next_line(int fd)
 	}
 	next_line = parse_buffer(buffer);
 	buffer = reset_buffer(buffer);
-	// if (!buffer)
-	// 	return (NULL);
 	return (next_line);
 }

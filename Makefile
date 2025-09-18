@@ -6,7 +6,7 @@
 #    By: abisani <abisani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 18:49:14 by abisani           #+#    #+#              #
-#    Updated: 2025/09/11 12:07:40 by abisani          ###   ########.fr        #
+#    Updated: 2025/09/14 18:16:17 by abisani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,6 @@ fclean: clean
 re: fclean all
 
 test: re
-	$(CC) -g $(CFLAGS) -o $(TEST_EXECUTABLE) -D BUFFER_SIZE=$(BUFFER_SIZE) tests.c $(SRC_FILES)
+	$(CC) -g $(CFLAGS) -Wl,--wrap=malloc -Wl,--wrap=free -o $(TEST_EXECUTABLE) -D BUFFER_SIZE=$(BUFFER_SIZE) tests.c $(SRC_FILES)
 # 	./$(TEST_EXECUTABLE)
 #-L. -lgetnextline

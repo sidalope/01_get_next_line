@@ -24,6 +24,9 @@
 // When argc = 3, read from filename at argv[1] and set BUFFER_SIZE to argv[2] 
 // Use a function to loop through calls to get_next_line to get at least one successive line at the time
 
+void	*__real_malloc(size_t size);
+void	__real_free(void *ptr);
+
 static int	skip_whitespace(const char *str)
 {
 	int	i;
@@ -71,6 +74,31 @@ int	ft_isalpha(int c)
 	else
 		return (0);
 }
+
+/* 
+ * __wrap_malloc - malloc wrapper function 
+ */
+void	*__wrap_malloc(size_t size)
+{
+	void	*ptr;
+
+	if (rand() % 42)
+		ptr = __real_malloc(size);
+	else
+		ptr = NULL;
+	dprintf(2, "malloc(%zu) = %p\n", size, ptr);
+	return (ptr);
+}
+
+/* 
+ * __wrap_free - free wrapper function 
+ */
+void	__wrap_free(void *ptr)
+{
+	dprintf(2, "free(%p)\n", ptr);
+	__real_free(ptr);
+}
+
 
 int	main(int argc, char *argv[])
 {
