@@ -82,7 +82,7 @@ void	*__wrap_malloc(size_t size)
 {
 	void	*ptr;
 
-	if (rand() % 4)
+	if (rand() % 11)
 		ptr = __real_malloc(size);
 	else
 		ptr = NULL;
@@ -98,7 +98,6 @@ void	__wrap_free(void *ptr)
 	dprintf(2, "free(%p)\n\n", ptr);
 	__real_free(ptr);
 }
-
 
 int	main(int argc, char *argv[])
 {
