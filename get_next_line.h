@@ -6,7 +6,7 @@
 /*   By: abisani <abisani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:43:44 by abisani           #+#    #+#             */
-/*   Updated: 2025/09/20 09:42:59 by abisani          ###   ########.fr       */
+/*   Updated: 2025/09/20 10:51:44 by abisani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdint.h>
+# include <stdio.h>
 
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);

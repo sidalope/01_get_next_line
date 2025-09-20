@@ -82,11 +82,11 @@ void	*__wrap_malloc(size_t size)
 {
 	void	*ptr;
 
-	if (rand() % 42)
+	if (rand() % 4)
 		ptr = __real_malloc(size);
 	else
 		ptr = NULL;
-	dprintf(2, "malloc(%zu) = %p\n", size, ptr);
+	dprintf(2, "malloc(%zu) = %p\n\n", size, ptr);
 	return (ptr);
 }
 
@@ -95,7 +95,7 @@ void	*__wrap_malloc(size_t size)
  */
 void	__wrap_free(void *ptr)
 {
-	dprintf(2, "free(%p)\n", ptr);
+	dprintf(2, "free(%p)\n\n", ptr);
 	__real_free(ptr);
 }
 
@@ -127,10 +127,12 @@ int	main(int argc, char *argv[])
 			else
 			{
 	        	printf("tests.c: |%s|", buf);
+				dprintf(2, "main free buf\n");
    	        	free(buf);
 				buf = NULL;
 			}
 		}
+			dprintf(2, "main free input\n");
         free(input);
         close(fd);
 
