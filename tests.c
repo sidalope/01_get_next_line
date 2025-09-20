@@ -121,13 +121,16 @@ int	main(int argc, char *argv[])
             buf = get_next_line(fd);
             if (!buf)
             {
-                printf("tests.c: [EOF]\n");
+                printf("tests.c: [EOF] or Error\n");
                 break;
             }
-            printf("tests.c: |%s|", buf);
-            free(buf);
-			buf = NULL;
-        }
+			else
+			{
+	        	printf("tests.c: |%s|", buf);
+   	        	free(buf);
+				buf = NULL;
+			}
+		}
         free(input);
         close(fd);
 
