@@ -96,7 +96,7 @@ void	*__wrap_malloc(size_t size)
 	// size_t count;
 
 	// 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47
-	if (rand() % 17)
+	if (rand() % 101)
 		ptr = __real_malloc(size);
 	else
 		ptr = NULL;
