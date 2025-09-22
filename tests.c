@@ -76,7 +76,17 @@ int	ft_isalpha(int c)
 		return (0);
 }
 
-/* 
+/* count = backtrace(tracePtrs, 10);
+	char** funcNames = backtrace_symbols(tracePtrs, count);
+	int fd = open("filenames.txt", O_WRONLY);
+	for (size_t i = 0; i < count; i++)
+		dprintf(fd, "%s\n", funcNames[i]);
+	close(fd);
+	
+	__builtin_frame_address
+
+	dprintf(2, "gnl free 3\n");
+ 
  * __wrap_malloc - malloc wrapper function 
  */
 void	*__wrap_malloc(size_t size)
@@ -94,14 +104,6 @@ void	*__wrap_malloc(size_t size)
 	dprintf(2, "malloc(%zu) = %p\n\n", size, ptr);
 	return (ptr);
 }
-// count = backtrace(tracePtrs, 10);
-	// char** funcNames = backtrace_symbols(tracePtrs, count);
-	// int fd = open("filenames.txt", O_WRONLY);
-	// for (size_t i = 0; i < count; i++)
-	// 	dprintf(fd, "%s\n", funcNames[i]);
-	// close(fd);
-// __builtin_frame_address
-
 
 
 /* 

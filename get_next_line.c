@@ -6,7 +6,7 @@
 /*   By: abisani <abisani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:45:39 by abisani           #+#    #+#             */
-/*   Updated: 2025/09/22 14:56:56 by abisani          ###   ########.fr       */
+/*   Updated: 2025/09/22 15:21:07 by abisani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,18 @@ static char	*reset_buffer(char *buf)
 		line_size++;
 	if (buf[line_size] == '\0')
 	{
-		// dprintf(2, "reset buf free 1\n");
 		free(buf);
 		return (NULL);
 	}
 	line_size++;
-	// dprintf(2, "line size: %li\n", line_size);
-	// dprintf(2, "buf + line size: %li\n", ft_strlen(buf + line_size));
-	// dprintf(2, "reset buf\n");
 	tmp_buf = ft_calloc(ft_strlen(buf + line_size) + 1, 1);
 	if (!tmp_buf)
 	{
-		// dprintf(2, "reset buf free 2\n");
 		free(buf);
 		return (NULL);
 	}
 	while (buf[line_size])
 		tmp_buf[i++] = buf[line_size++];
-	// dprintf(2, "reset buf free 3\n");
 	free(buf);
 	return (tmp_buf);
 }
@@ -64,7 +58,6 @@ static char	*parse_buffer(char	*buf)
 		line_len++;
 	if (buf[line_len] == '\n')
 		line_len++;
-	// dprintf(2, "parse buf\n");
 	next_line = ft_calloc(line_len + 1, 1);
 	if (!next_line)
 		return (NULL);
@@ -81,7 +74,6 @@ static ssize_t	read_into_buffer(int fd, char **static_buffer)
 	char	*temp_buf;
 	ssize_t	bytes_read;
 
-	// dprintf(2, "read into buffer\n");
 	temp_buf = ft_calloc(BUFFER_SIZE + 1, 1);
 	if (!temp_buf)
 		return (-1);
@@ -89,22 +81,23 @@ static ssize_t	read_into_buffer(int fd, char **static_buffer)
 	while (bytes_read > 0)
 	{
 		if (ft_strchr(*static_buffer, '\n'))
-		{
-			// dprintf(2, "read into buffer free OK\n");
 			return (free(temp_buf), bytes_read);
-		}
 		bytes_read = read(fd, temp_buf, BUFFER_SIZE);
-		// dprintf(2, "bytes_read 1: %li\n\n", bytes_read);
-		if (bytes_read == -1)
+		if (bytes_read == -1 || bytes_read == -1)
 			break ;
 		temp_buf[bytes_read] = 0;
 		if (!ft_gnl_strjoin(static_buffer, temp_buf))
 			bytes_read = -1;
 	}
-	// dprintf(2, "bytes_read 2: %li\n\n", bytes_read);
-	// dprintf(2, "read into buffer free END\\FAIL\n");
 	free(temp_buf);
 	return (bytes_read);
+}
+
+void	*free_buffer(char **buffer)
+{
+	free(*buffer);
+	*buffer = NULL;
+	return (NULL);
 }
 
 char	*get_next_line(int fd)
@@ -115,66 +108,18 @@ char	*get_next_line(int fd)
 
 	if (!buffer)
 	{
-		// dprintf(2, "gnl\n");
 		buffer = ft_calloc(1, 1);
 		if (!buffer)
 			return (NULL);
 	}
 	if (BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
-	{
-		// dprintf(2, "gnl free 1\n");
-		free(buffer);
-		buffer = NULL;
-		return (NULL);
-	}
+		return (free_buffer(&buffer));
 	bytes_read = read_into_buffer(fd, &buffer);
 	if (bytes_read == -1 || (!bytes_read && buffer[0] == 0))
-	{
-		// dprintf(2, "gnl free 2\n");
-		free(buffer);
-		buffer = NULL;
-		return (NULL);
-	}
+		return (free_buffer(&buffer));
 	next_line = parse_buffer(buffer);
 	if (next_line == NULL)
-	{
-		// dprintf(2, "gnl free 3\n");
-		free(buffer);
-		buffer = NULL;
-		return (NULL);
-	}
+		return (free_buffer(&buffer));
 	buffer = reset_buffer(buffer);
 	return (next_line);
 }
-
-
-// static char	*read_into_buffer(int fd, char **static_buffer)
-// {
-// 	char	*temp_buf;
-// 	ssize_t	bytes_read;
-
-// 	dprintf(2, "read into buffer\n");
-// 	temp_buf = ft_calloc(BUFFER_SIZE + 1, 1);
-// 	if (!temp_buf)
-// 		return (NULL);
-// 	bytes_read = 1;
-// 	while (bytes_read > 0)
-// 	{
-// 		if (ft_strchr(*static_buffer, '\n'))
-// 		{
-// 			dprintf(2, "read into buffer free OK\n");
-// 			return (free(temp_buf), *static_buffer);
-// 		}
-// 		bytes_read = read(fd, temp_buf, BUFFER_SIZE);
-// 		dprintf(2, "bytes_read 1: %li\n\n", bytes_read);
-// 		if (bytes_read == -1)
-// 			break ;
-// 		temp_buf[bytes_read] = 0;
-// 		if (!ft_gnl_strjoin(static_buffer, temp_buf))
-// 			break ;
-// 	}
-// 	dprintf(2, "bytes_read 2: %li\n\n", bytes_read);
-// 	dprintf(2, "read into buffer free END\\FAIL\n");
-// 	free(temp_buf);
-// 	return (NULL);
-// }
