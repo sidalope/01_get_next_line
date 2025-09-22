@@ -6,18 +6,12 @@
 /*   By: abisani <abisani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:45:39 by abisani           #+#    #+#             */
-/*   Updated: 2025/09/22 15:21:07 by abisani          ###   ########.fr       */
+/*   Updated: 2025/09/22 15:29:53 by abisani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// static void *free_and_annull(void *buf)
-// {
-// 	free (buf);
-// 	buf = NULL;
-// 	return (NULL);
-// }
 static char	*reset_buffer(char *buf)
 {
 	size_t	i;
