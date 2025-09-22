@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <execinfo.h>
 #include "get_next_line.h"
 
 //Does your function still work if the BUFFER_SIZE value is 9999?
@@ -81,14 +82,27 @@ int	ft_isalpha(int c)
 void	*__wrap_malloc(size_t size)
 {
 	void	*ptr;
+	// void *tracePtrs[10];
+	// size_t count;
 
-	if (rand() % 11)
+	// 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47
+	if (rand() % 17)
 		ptr = __real_malloc(size);
 	else
 		ptr = NULL;
+	
 	dprintf(2, "malloc(%zu) = %p\n\n", size, ptr);
 	return (ptr);
 }
+// count = backtrace(tracePtrs, 10);
+	// char** funcNames = backtrace_symbols(tracePtrs, count);
+	// int fd = open("filenames.txt", O_WRONLY);
+	// for (size_t i = 0; i < count; i++)
+	// 	dprintf(fd, "%s\n", funcNames[i]);
+	// close(fd);
+// __builtin_frame_address
+
+
 
 /* 
  * __wrap_free - free wrapper function 
@@ -106,6 +120,7 @@ int	main(int argc, char *argv[])
 	size_t	len = 0;
 	char	*input = NULL;
 
+	buf = "0";
 	fd = 0;
 	if (argc == 2)
 	{
@@ -120,6 +135,7 @@ int	main(int argc, char *argv[])
             buf = get_next_line(fd);
             if (!buf)
             {
+				printf("returned: %s\n", buf);
                 printf("tests.c: [EOF] or Error\n");
                 break;
             }

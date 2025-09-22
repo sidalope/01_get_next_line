@@ -6,7 +6,7 @@
 #    By: abisani <abisani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 18:49:14 by abisani           #+#    #+#              #
-#    Updated: 2025/09/20 16:48:43 by abisani          ###   ########.fr        #
+#    Updated: 2025/09/22 13:21:12 by abisani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ test: re
 	$(CC) -g $(CFLAGS) -o $(TEST_EXECUTABLE) -D BUFFER_SIZE=$(BUFFER_SIZE) tests.c $(SRC_FILES)
 
 test_wrap: re
-	$(CC) -g $(CFLAGS) -Wl,--wrap=malloc -Wl,--wrap=free -o $(TEST_EXECUTABLE) tests.c $(SRC_FILES)
+	$(CC) -g $(CFLAGS) -Wl,--wrap=malloc -Wl,--wrap=free -o $(TEST_EXECUTABLE) -rdynamic tests.c $(SRC_FILES)
 
 # 	./$(TEST_EXECUTABLE)
 #-L. -lgetnextline

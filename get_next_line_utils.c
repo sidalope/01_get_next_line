@@ -6,7 +6,7 @@
 /*   By: abisani <abisani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:48:33 by abisani           #+#    #+#             */
-/*   Updated: 2025/09/20 16:04:27 by abisani          ###   ########.fr       */
+/*   Updated: 2025/09/22 14:56:36 by abisani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_gnl_strjoin(char **s1, char *s2)
 	new_str = malloc(ft_strlen(*s1) + ft_strlen(s2) + 1);
 	if (!new_str)
 	{
-		// dprintf(2, "strjoin FAIL\n");
+		// dprintf(2, "strjoin FAIL\n\n");
 		return (NULL);
 	}
 	while (*s1 && (*s1)[i])
