@@ -115,15 +115,17 @@ void	__wrap_free(void *ptr)
 	__real_free(ptr);
 }
 
+
 int	main(int argc, char *argv[])
 {
 	char	*buf;
 	int		fd;
 	size_t	len = 0;
 	char	*input = NULL;
-
+	
 	buf = "0";
 	fd = 0;
+	// printf("maxfiles: %li\n", sysconf(_SC_OPEN_MAX));
 	if (argc == 2)
 	{
 		printf("argv: %s\n", argv[1]);
