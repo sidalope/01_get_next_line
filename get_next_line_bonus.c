@@ -94,8 +94,6 @@ void	*free_buffer(char **buffer)
 	return (NULL);
 }
 
-
-
 char	*get_next_line(int fd)
 {
 	static char		*buffer[1024];
